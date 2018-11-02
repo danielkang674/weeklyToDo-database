@@ -27,9 +27,14 @@ app.get('/db/days', async (req, res) => {
   }
 });
 
-app.post('/db/saveTodo', (req, res) => {
-  console.log(req.body);
-  res.end('got it');
+app.post('/db/saveTodo', async (req, res) => {
+  try {
+    await db.saveTodoAndDay(req.body)
+    res.sendStatus(200);
+  } catch (err) {
+    console.log('DB save todo and day', err.stack);
+    res.sendStatus(400);
+  }
 });
 
 app.get('*', (req, res) => {

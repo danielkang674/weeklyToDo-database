@@ -11,6 +11,11 @@ module.exports.getAllDays = async () => {
     // only need the row data
     return days.rows;
   } catch (err) {
-    console.log('DB error getting all days', err.stack);
-  }
+    console.log('DB getting all days', err.stack);
+  };
+};
+
+module.exports.saveTodoAndDay = (todoAndDay) => {
+  const { todo, day } = todoAndDay;
+  return client.query('INSERT INTO todos (item, days_id) VALUES ($1, (SELECT id FROM days WHERE name = $2))', [todo, day]);
 };
