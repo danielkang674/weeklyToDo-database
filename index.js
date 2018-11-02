@@ -29,7 +29,9 @@ app.get('/db/days', async (req, res) => {
 
 app.post('/db/saveTodo', async (req, res) => {
   try {
-    await db.saveTodoAndDay(req.body)
+    const data = await db.saveTodoAndDay(req.body);
+    // Data saved and returned from DB
+    // console.log(data.rows[0]);
     res.sendStatus(200);
   } catch (err) {
     console.log('DB save todo and day', err.stack);

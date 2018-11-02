@@ -17,5 +17,5 @@ module.exports.getAllDays = async () => {
 
 module.exports.saveTodoAndDay = (todoAndDay) => {
   const { todo, day } = todoAndDay;
-  return client.query('INSERT INTO todos (item, days_id) VALUES ($1, (SELECT id FROM days WHERE name = $2))', [todo, day]);
+  return client.query('INSERT INTO todos (item, days_id) VALUES ($1, (SELECT id FROM days WHERE day = $2)) RETURNING *', [todo, day]);
 };
