@@ -19,3 +19,8 @@ module.exports.saveTodoAndDay = (todoAndDay) => {
   const { todo, day } = todoAndDay;
   return client.query('INSERT INTO todos (item, days_id) VALUES ($1, (SELECT id FROM days WHERE day = $2)) RETURNING *', [todo, day]);
 };
+
+module.exports.getTodosFromDay = (dayObj) => {
+  const { day } = dayObj;
+  return client.query('SELECT todos.id, todos.item FROM todos WHERE days_id = (SELECT days.id FROM days WHERE days.day = $1)', [day]);
+};

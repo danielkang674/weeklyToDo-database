@@ -39,6 +39,17 @@ app.post('/db/saveTodo', async (req, res) => {
   }
 });
 
+app.get('/db/getTodo', async (req, res) => {
+  try {
+    const todos = await db.getTodosFromDay(req.query);
+    console.log(todos.rows);
+    res.json(todos.rows);
+  } catch (err) {
+    console.log('DB get todo from day input', err.stack);
+    res.sendStatus(400);
+  }
+});
+
 app.get('*', (req, res) => {
   res.send('hello');
 });
