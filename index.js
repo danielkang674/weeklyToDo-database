@@ -11,6 +11,7 @@ if (MODE === 'DEV') {
   app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "*");
     next();
   });
 }
@@ -42,10 +43,19 @@ app.post('/db/saveTodo', async (req, res) => {
 app.get('/db/getTodo', async (req, res) => {
   try {
     const todos = await db.getTodosFromDay(req.query);
-    console.log(todos.rows);
     res.json(todos.rows);
   } catch (err) {
     console.log('DB get todo from day input', err.stack);
+    res.sendStatus(400);
+  }
+});
+
+app.delete('/db/deleteTodo', async (req, res) => {
+  try {
+    const data = await db.deleteTodo(req.body);
+    res.sendStatus(200);
+  } catch (err) {
+    console.log('DB delete todo', err.stack);
     res.sendStatus(400);
   }
 });

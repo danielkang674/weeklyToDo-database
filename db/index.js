@@ -24,3 +24,8 @@ module.exports.getTodosFromDay = (dayObj) => {
   const { day } = dayObj;
   return client.query('SELECT todos.id, todos.item FROM todos WHERE days_id = (SELECT days.id FROM days WHERE days.day = $1)', [day]);
 };
+
+module.exports.deleteTodo = (idObj) => {
+  const { id } = idObj;
+  return client.query('DELETE FROM todos WHERE id = $1', [id]);
+};
